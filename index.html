@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	 	<link rel="stylesheet" href="css/style.css">
+	 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Overpass:100,200,300,400,500,600,900">
+		<title>Google Maps</title>
+	</head>
+	<body>
+		<div id="header">
+			<h1>Cinemas in the Lower North Island, NZ</h1>
+		</div>
+		<div id="options">
+			<h2>Options</h2>
+			<h3><i class="fa fa-location-arrow" aria-hidden="true"></i> Find location</h3>
+				<button type="button" id="find-location">Find your location</button>	
+			<h3><i class="fa fa-map-marker" aria-hidden="true"></i> Markers</h3>
+				<button onclick="toggleMarkers();" type="button" class="selected" id="toggleMarkers">Toggle Markers Off</button>
+			<h3>Route plotting</h3>
+				<i class="fa fa-car" aria-hidden="true"></i> <button type="button" id="driving" class="button-route selected" data-mode="DRIVING">Driving</button>	
+				<i class="fa fa-male" aria-hidden="true"></i> <button type="button" id="walking" class="button-route" data-mode="WALKING">Walking</button><br>	
+				<i class="fa fa-bicycle" aria-hidden="true"></i><button type="button" id="cycling" class="button-route" data-mode="BICYCLING">Cycling</button>	
+				<i class="fa fa-bus" aria-hidden="true"></i> <button type="button" id="transit" class="button-route" data-mode="TRANSIT">Transit</button>	
+			<h3><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Current Route</h3>	
+			<div id="route-text">
+			<b>No route. </b>Find your location, then click on the map to plot a route.
+			</div>
+		</div>
+  			 <div class="popup">
+			  <span class="popuptext" id="myPopup">
+				Please enable find your location to plot routes.
+				</span>
+			</div>
+		<div id="map">
+		</div>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTyDvknTresdDUNlgeA-3vUYSMF-dcx4M&libraries=geometry"></script>
+		<!-- <script src="js/script.js" type="text/javascript"></script> -->
+		<!-- <script src="js/scriptFriday.js" type="text/javascript"></script> -->
+		<!-- <script src="js/altMarkers.js" type="text/javascript"></script> -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="js/script.js" type="text/javascript"></script>
+		</script>
+	</body>
+</html>

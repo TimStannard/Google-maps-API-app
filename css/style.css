@@ -1,0 +1,117 @@
+
+
+h1 {
+	font-weight: 400;
+		margin: 15px;
+
+	/*margin-bottom: 15px;*/
+}
+h2 {
+	font-weight: 400;
+		margin: 5px;
+}
+h3 {
+	font-weight: 300;
+	margin: 5px;
+		padding-top: 10px;
+}
+body {
+	padding: 20px;
+
+	margin: 0;
+	font-family: Overpass;
+}
+#options{
+	width: 20%;
+	display: inline-block;
+	float: left;
+	background-color: lightgrey;
+	margin-right: 10px;
+	border-radius: 5px;
+	padding: 20px;
+}
+
+
+#map {
+	display: inline-block;
+	height: 750px;
+	width: 900px;
+	float: left;
+	margin: 0 auto;
+	border-radius: 5px;
+	/*padding-left: 10%;*/
+	/*background-color: black;*/
+}
+
+button {
+	padding: 10px;
+	margin-bottom: 10px;
+
+}
+
+#walking {
+	padding: 10px;
+	/*font-size: 18px;*/
+
+}
+
+#driving {
+	padding: 10px;
+	/*font-size: 18px;*/
+}
+
+.selected{
+	background-color: black;
+	color: white;
+}
+
+#route-text {
+	background-color: #ededed;
+	padding: 15px;
+}
+
+.popup {
+    position: absolute;
+    left: 476px;
+    top: 208px;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 12px 3px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
