@@ -6,7 +6,7 @@ var AllMarkers = [ //array of objects
     lat: -41.292876,
     lng: 174.779813,
     title: "Reading Cinemas",
-    description: "<img src='img/readings.png' alt='reading'><br>Basic Cinema with the Gold Lounge. <br><i>You can get drunk in there.</i>"
+    // description: "<img src='img/readings.png' alt='reading'><br>Basic Cinema with the Gold Lounge. <br><i>You can get drunk in there.</i>"
     // icon: "icon1.png"
   },
   {
@@ -19,25 +19,25 @@ var AllMarkers = [ //array of objects
     lat: -41.296200,
     lng: 174.775225,
     title: "Lighthouse Cuba",
-    description: "<img src='img/lighthouse.png' alt='lighthouse'><br>Smaller cinema where you can buy beer, and has couches.<br><i>Much better than Reading Cinemas.</i>"
+    // description: "<img src='img/lighthouse.png' alt='lighthouse'><br>Smaller cinema where you can buy beer, and has couches.<br><i>Much better than Reading Cinemas.</i>"
   },
     {
     lat: -41.305871,
     lng: 174.763611,
     title: "Penthouse Cuba",
-    description: "<img src='img/Penthouse.png' alt='penthouse'><br>Retro cinema!.<br><i>Definitely worth checking out.</i>"
+    // description: "<img src='img/Penthouse.png' alt='penthouse'><br>Retro cinema!.<br><i>Definitely worth checking out.</i>"
   },
       {
     lat: -41.337049,
     lng: 174.772374,
     title: "Empire Cinema",
-    description: "<img src='img/empire.png' alt='empire'><br>Wonderful cinema!.<br><i>Definitely worth checking out.</i>"
+    // description: "<img src='img/empire.png' alt='empire'><br>Wonderful cinema!.<br><i>Definitely worth checking out.</i>"
   },
         {
     lat: -41.105987,
     lng: 174.916561,
     title: "Light House Pauatahanui",
-    description: "<img src='img/lighthouse2.png' alt='lighthouse pautahanui'><br>Small town cinema, apparently pretty good."
+    // description: "<img src='img/lighthouse2.png' alt='lighthouse pautahanui'><br>Small town cinema, apparently pretty good."
   },
           {
     lat: -41.315791,
@@ -49,19 +49,19 @@ var AllMarkers = [ //array of objects
     lat: -41.226066,
     lng: 174.879539,
     title: "Light House Petone",
-    description: "<img src='img/lighthouse3.png' alt='lighthouse petone'><br>Great cinema ito check out if you're in the area."
+    // description: "<img src='img/lighthouse3.png' alt='lighthouse petone'><br>Great cinema ito check out if you're in the area."
   },
               {
     lat: -41.136708,
     lng: 174.841283,
     title: "Reading Cinemas - North City",
-    description: "<img src='img/readings2.png' alt='Reading Cinemas - North City'><br>Never been here, probably pretty average."
+    // description: "<img src='img/readings2.png' alt='Reading Cinemas - North City'><br>Never been here, probably pretty average."
   },
     {
     lat: -41.293982,
     lng: 174.782115,
     title: "Paramount Cinema",
-    description: "<img src='img/paramount.png' alt='paramount.png'><br>Overall, a bit crap.<br><i> Fun to watch late night screenings of the Room here though.</i>"
+    // description: "<img src='img/paramount.png' alt='paramount.png'><br>Overall, a bit crap.<br><i> Fun to watch late night screenings of the Room here though.</i>"
   }
 ];
 function init(){
@@ -69,22 +69,24 @@ function init(){
     var mapOptions = {
         //set where the map starts
         center : {
-            lat:-41.245063,
-            lng: 174.824066
+            lat:-40.245063,
+            lng: 168.824066
             // lat: -41.2950049,
             // lng: 174.7814311
         },
-        zoom: 11, 
-        disableDefaultUI: false, //turn off user interface
-        scrollwheel: true,
-        draggable: true,
-        draggableCursor: "pointer",
-        draggingCursor: "crosshair",
-        fullscreenControl: true,
+
+        zoom: 7, 
+        disableDefaultUI: true, //turn off user interface
+        scrollwheel: false,
+        draggable: false,
+        draggableCursor: "default",
+        draggingCursor: "pointer",
+        fullscreenControl: false,
         backgroundColor: "grey",
+        disableDoubleClickZoom: true,
         ketboardShortcuts: false,
         mapTypeControlOptions: {
-            position: google.maps.ControlPosition.TOP_CENTER
+        position: google.maps.ControlPosition.TOP_CENTER
         },
         styles: [
     {
@@ -438,6 +440,30 @@ $("#toggleMarkers").click(function() {
 
 
 })
+
+$(document).ready(function() {
+
+  $('#go').click(function() {
+      $('#modal-1-start').css("display", "none");
+      $('#modal-2-people').css("display", "inline-block");
+    });
+
+  $('#btn-back-people').click(function() {
+    $('#modal-1-start').css("display", "inline-block");
+    $('#modal-2-people').css("display", "none");
+  });
+
+    $('#btn-next-people').click(function() {
+    $('#modal-2-people').css("display", "none");
+    $('#modal-3-days').css("display", "inline-block");
+  });
+
+    $('#btn-back-days').click(function() {
+    $('#modal-2-people').css("display", "inline-block");
+    $('#modal-3-days').css("display", "none");
+  });
+
+});
 
 //popups
 function popup() {

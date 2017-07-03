@@ -4,12 +4,126 @@
 	 	<link rel="stylesheet" href="css/style.css">
 	 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Overpass:100,200,300,400,500,600,900">
-		<title>Google Maps</title>
+	 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,900">
+		<title>Tourism NZ - Route Planner</title>
 	</head>
 	<body>
-		<div id="header">
-			<h1>Cinemas in the Lower North Island, NZ</h1>
+	<div id="container">
+		<div id="map">
 		</div>
+		<!-- modal: welcome message -->
+		<div id="modal-1-start" class="center modal">
+			<div class="top-row-logo">
+				<div class="green-line-h">		
+				</div>
+				<div class="header-container">
+					<img src="img/tnz-logo.png">
+					<span class="help-bubble">
+					<i class="fa fa-question-circle" aria-hidden="true"></i>
+					</span>
+				</div>
+			</div>
+			<div class="middle-row-content">
+				<div class="lightgreen-line-h"></div>
+					<div class="text-mid-row">
+						<span class="welcome-text">
+						Start a new route:
+						</span>
+					</div>
+					<div class="btn-mid-row">
+						<button id="go" class="btn">GO&nbsp;<i class="fa fa-arrow-right dark" aria-hidden="true"></i></button>
+					</div>
+			</div>
+			<div class="image-row">
+			</div>
+		</div>
+		<!--modal: choose people -->
+		<div id="modal-2-people" class="center modal">
+			<div class="top-row-logo">
+				<div class="green-line-h">						
+				</div>
+				<div class="header-container">
+					<img src="img/tnz-logo.png">
+				</div>
+			</div>
+			<div class="middle-row-content">
+				<div class="lightgreen-line-h">	
+				</div>
+				<div class="text-mid-row">
+					How many people are you travelling with, including yourself?
+					<div class="radio-form">
+						<form>
+						<span class="icon-user"><i class="fa fa-male" aria-hidden="true"></i></span>
+						<input type="radio" id="1-option" name="selector" checked="checked">
+	   					<label for="1-option">1</label>
+	   					<input type="radio" id="2-option" name="selector">
+	   					<label for="2-option">2</label>
+	   					<input type="radio" id="3-option" name="selector">
+	   					<label for="3-option">3</label>
+	   					<input type="radio" id="4-option" name="selector">
+	   					<label for="4-option">4</label>
+	   					<input type="radio" id="5-option" name="selector">
+	   					<label for="5-option">5</label>
+	   					<input type="radio" id="6-option" name="selector">
+	   					<label for="6-option">6</label>
+	   					</form>
+	   				</div>
+				</div>
+				<div class="btn-choice">
+					<button id="btn-back-people" class="btn-light"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;GO BACK</button>
+					<button id="btn-next-people" class="btn float-right">NEXT&nbsp;<i class="fa fa-arrow-right dark" aria-hidden="true"></i></button>
+				</div>
+			</div>
+				<div class="image-row big">
+			</div>
+		</div>
+		<!--modal: choose times (days) -->
+		<div id="modal-3-days" class="center modal">
+			<div class="top-row-logo">
+				<div class="green-line-h">						
+				</div>
+				<div class="header-container">
+					<img src="img/tnz-logo.png">
+				</div>
+			</div>
+			<div class="middle-row-content">
+				<div class="lightgreen-line-h">	
+				</div>
+				<div class="text-mid-row">
+					How many days are you travelling for?
+					<br>
+					<div class="radio-form">
+						<span class="icon-date"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+						<input type="radio" id="1-option-days" name="selector" checked="checked">
+	   					<label for="1-option">1</label>
+	   					<input type="radio" id="2-option-days" name="selector">
+	   					<label for="2-option">2</label>
+	   					<input type="radio" id="3-option-days" name="selector">
+	   					<label for="3-option">3</label>
+	   					<input type="radio" id="4-option-days" name="selector">
+	   					<label for="3-option">4</label>
+	   					<input type="radio" id="5-option-days" name="selector">
+	   					<label for="3-option">5</label>
+	   					<input type="radio" id="6-option-days" name="selector">
+	   					<label for="3-option">6</label>
+	   					<div id="specify-days-container">
+	   					<span class="icon-date"><i class="fa fa-question-circle-o" aria-hidden="true"></i></span>
+	   						<label for="specify-days">Or type in amount of days: </label>
+	   						<input type="text" id="specify-days" name="days-input">
+	   					</div>
+	   				</div>
+				</div>
+				<div class="btn-choice">
+					<button id="btn-back-days" class="btn-light"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;GO BACK</button>
+					<button id="btn-next-days" class="btn float-right">NEXT&nbsp;<i class="fa fa-arrow-right dark" aria-hidden="true"></i></button>
+				</div>
+			</div>
+				<div class="image-row big">
+			</div>
+		</div>
+
+		<!-- comment this out -->
+
 		<div id="options">
 			<h2>Options</h2>
 			<h3><i class="fa fa-location-arrow" aria-hidden="true"></i> Find location</h3>
@@ -26,13 +140,13 @@
 			<b>No route. </b>Find your location, then click on the map to plot a route.
 			</div>
 		</div>
-  			 <div class="popup">
+<!--   			 <div class="popup">
 			  <span class="popuptext" id="myPopup">
 				Please enable find your location to plot routes.
 				</span>
-			</div>
-		<div id="map">
+			</div> -->
 		</div>
+
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTyDvknTresdDUNlgeA-3vUYSMF-dcx4M&libraries=geometry"></script>
 		<!-- <script src="js/script.js" type="text/javascript"></script> -->
 		<!-- <script src="js/scriptFriday.js" type="text/javascript"></script> -->
