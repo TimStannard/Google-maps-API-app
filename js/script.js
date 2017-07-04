@@ -1,69 +1,6 @@
 var map, marker, infobox, userLocation, clickmarker, directionService, directionDisplay, closestMarker, savedLocation;
 var travelMethod = "DRIVING";
-var markers = [];
-var AllMarkers = [ //array of objects
-  {
-    lat: -41.292876,
-    lng: 174.779813,
-    title: "Reading Cinemas",
-    // description: "<img src='img/readings.png' alt='reading'><br>Basic Cinema with the Gold Lounge. <br><i>You can get drunk in there.</i>"
-    // icon: "icon1.png"
-  },
-  {
-    lat: -41.294320,
-    lng: 174.784058,
-    title: "Embassy Theatre",
-    description: "<img src='img/embassy.png' alt='embassy'><br>Probably Wellington's best cinema."
-  },
-  {
-    lat: -41.296200,
-    lng: 174.775225,
-    title: "Lighthouse Cuba",
-    // description: "<img src='img/lighthouse.png' alt='lighthouse'><br>Smaller cinema where you can buy beer, and has couches.<br><i>Much better than Reading Cinemas.</i>"
-  },
-    {
-    lat: -41.305871,
-    lng: 174.763611,
-    title: "Penthouse Cuba",
-    // description: "<img src='img/Penthouse.png' alt='penthouse'><br>Retro cinema!.<br><i>Definitely worth checking out.</i>"
-  },
-      {
-    lat: -41.337049,
-    lng: 174.772374,
-    title: "Empire Cinema",
-    // description: "<img src='img/empire.png' alt='empire'><br>Wonderful cinema!.<br><i>Definitely worth checking out.</i>"
-  },
-        {
-    lat: -41.105987,
-    lng: 174.916561,
-    title: "Light House Pauatahanui",
-    // description: "<img src='img/lighthouse2.png' alt='lighthouse pautahanui'><br>Small town cinema, apparently pretty good."
-  },
-          {
-    lat: -41.315791,
-    lng: 174.816127,
-    title: "Roxy",
-    description: "<img src='img/roxy.png' alt='roxy'><br>Great cinema ito check out if you're in the area."
-  },
-            {
-    lat: -41.226066,
-    lng: 174.879539,
-    title: "Light House Petone",
-    // description: "<img src='img/lighthouse3.png' alt='lighthouse petone'><br>Great cinema ito check out if you're in the area."
-  },
-              {
-    lat: -41.136708,
-    lng: 174.841283,
-    title: "Reading Cinemas - North City",
-    // description: "<img src='img/readings2.png' alt='Reading Cinemas - North City'><br>Never been here, probably pretty average."
-  },
-    {
-    lat: -41.293982,
-    lng: 174.782115,
-    title: "Paramount Cinema",
-    // description: "<img src='img/paramount.png' alt='paramount.png'><br>Overall, a bit crap.<br><i> Fun to watch late night screenings of the Room here though.</i>"
-  }
-];
+
 function init(){
 
     var mapOptions = {
@@ -224,11 +161,10 @@ function init(){
 // set google maps into div
 
   map = new google.maps.Map(document.getElementById("map"), mapOptions)
-  addAllMarkers();
 
 // adding markers
   google.maps.event.addListener(map, 'click', function(event) {
-     placeMarker(event.latLng);
+     // placeMarker(event.latLng);
   });
 
 }
@@ -299,7 +235,7 @@ function addAllMarkers(){
         lng: AllMarkers[i].lng
       },
       map: map,
-      icon: "img/cinema-icon.png",
+      // icon: "img/cinema-icon.png",
       title: AllMarkers[i].title,
       description: AllMarkers[i].description
     })
@@ -441,11 +377,121 @@ $("#toggleMarkers").click(function() {
 
 })
 
+// normal code here
+
+var DaysChosen = 1;
+var ValidDays = false;
+var RadioNumberSelected = true;
+var motorhomeSelected = false;
+var DaysPattern = /^\d+$/;
+
 $(document).ready(function() {
 
+// fade in welcome modal
+  setTimeout(function(){
+    $('#modal-1-start').css("display", "inline-block");
+  }, 800);
+    setTimeout(function(){
+    $('#modal-1-start').css("opacity", "1");
+    $('#modal-1-start').css("transform", "scale(1, 1)");
+  }, 900);
+
+// align modals to center
+  $(window).resize(function(){
+
+    $(".modal.center").each(function(){
+
+    $(this).css("top", ($(window).height()/2) - ($(this).height()/2) - 30 );
+    $(this).css("left", ($(window).width()/2) - ($(this).width()/2) );
+
+    });
+
+  }).trigger("resize");
+
+// validate amount of days
+
+  $("#specify-days")
+    .keyup(function(){
+        if($(this).val().match(DaysPattern) && $(this).val() > 0 && $(this).val() < 16){
+          $('#tick-days').css("display", "inline");
+          $('#error-days').text("");
+          $('input[name=days-selector]').attr('disabled', true);
+          $('#days-form').css('color', 'lightgrey');
+          ValidDays = true;
+          RadioNumberSelected = false;
+        }else if ($(this).val() == ""){
+          $('#error-days').text("");
+          $('#tick-days').css("display", "none");
+          $('input[name=days-selector]').attr('disabled', false);
+          $('#days-form').css('color', 'black');
+          RadioNumberSelected = true;
+          ValidDays = false;
+        }else if ($(this).val() == 0){
+          $('#error-days').text("\u2757 Number must be greater than 1.");
+          $('#tick-days').css("display", "none");
+          $('input[name=days-selector]').attr('disabled', true);
+          $('#days-form').css('color', 'lightgrey');
+          ValidDays = false;
+          RadioNumberSelected = false;
+        }else if ($(this).val() > 15) {
+          $('#error-days').text("\u2757 Number must be less than 16.");
+          $('#tick-days').css("display", "none");
+          ValidDays = false;
+        }else {
+          $('#error-days').text("\u2757 Please enter a whole number only.");
+          $('#tick-days').css("display", "none");
+          $('input[name=days-selector]').attr('disabled', true);
+          $('#days-form').css('color', 'lightgrey');
+          ValidDays = false;
+        }
+      }).focus(function(){
+        $('input[name=days-selector]').attr('disabled', true);
+        $('#days-form').css('color', 'lightgrey');
+        RadioNumberSelected = false;
+      }).blur(function(){
+        if (ValidDays == true) {
+          $('input[name=days-selector]').attr('disabled', true);
+          $('#days-form').css('color', 'lightgrey');
+          RadioNumberSelected = false;
+        }else if ($(this).val() == ""){
+          $('#error-days').text("");
+          $('#tick-days').css("display", "none");
+          $('input[name=days-selector]').attr('disabled', false);
+          $('#days-form').css('color', 'black');
+          ValidDays = false;
+          RadioNumberSelected = true;
+        }
+   });
+
+  // selecting vehicle
+  $(".vehicle-item")
+    .click(function(){
+      motorhomeSelected = false;
+      $( "#motorhome-icon" ).css('opacity', '0.7');
+      $(".vehicle-item").removeClass('v-selected');
+      $(this).addClass('v-selected');
+      $('.check-box').text('');
+      $(this).find('.check-box').text('\u2714');
+    });
+
+  $( "#motorhome" ).mouseover(function() {
+   $( "#motorhome-icon" ).css('opacity', '1');
+  });
+  $( "#motorhome" ).mouseout(function() {
+    if (motorhomeSelected == false){
+   $( "#motorhome-icon" ).css('opacity', '0.7');
+ }
+  });
+  $( "#motorhome" ).click(function() {
+    motorhomeSelected = true;
+   $( "#motorhome-icon" ).css('opacity', '1');
+  });
+
+// button navigation
+
   $('#go').click(function() {
-      $('#modal-1-start').css("display", "none");
-      $('#modal-2-people').css("display", "inline-block");
+    $('#modal-1-start').css("display", "none");
+    $('#modal-2-people').css("display", "inline-block");
     });
 
   $('#btn-back-people').click(function() {
@@ -461,6 +507,25 @@ $(document).ready(function() {
     $('#btn-back-days').click(function() {
     $('#modal-2-people').css("display", "inline-block");
     $('#modal-3-days').css("display", "none");
+  });
+
+    $('#btn-next-days').click(function() {
+      if(ValidDays == true) {
+        DaysChosen = $("#specify-days").val();
+        $('#modal-4-vehicle').css("display", "inline-block");
+        $('#modal-3-days').css("display", "none");
+        console.log(DaysChosen);
+      }else if (ValidDays == false && RadioNumberSelected == true){
+        DaysChosen = $("[name=days-selector]:checked").val();
+        $('#modal-4-vehicle').css("display", "inline-block");
+        $('#modal-3-days').css("display", "none");
+        console.log(DaysChosen);
+    }
+  });
+
+    $('#btn-back-vehicle').click(function() {
+    $('#modal-4-vehicle').css("display", "none");
+    $('#modal-3-days').css("display", "inline-block");
   });
 
 });

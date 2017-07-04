@@ -25,13 +25,13 @@
 			</div>
 			<div class="middle-row-content">
 				<div class="lightgreen-line-h"></div>
-					<div class="text-mid-row">
+					<div class="text-welcome float-left">
 						<span class="welcome-text">
-						Start a new route:
+						<b>Start a new route:</b>
 						</span>
 					</div>
 					<div class="btn-mid-row">
-						<button id="go" class="btn">GO&nbsp;<i class="fa fa-arrow-right dark" aria-hidden="true"></i></button>
+						<button id="go" class="btn">GO&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 					</div>
 			</div>
 			<div class="image-row">
@@ -50,28 +50,28 @@
 				<div class="lightgreen-line-h">	
 				</div>
 				<div class="text-mid-row">
-					How many people are you travelling with, including yourself?
+					<b>How many people are travelling, including yourself?</b>
 					<div class="radio-form">
 						<form>
-						<span class="icon-user"><i class="fa fa-male" aria-hidden="true"></i></span>
-						<input type="radio" id="1-option" name="selector" checked="checked">
-	   					<label for="1-option">1</label>
-	   					<input type="radio" id="2-option" name="selector">
-	   					<label for="2-option">2</label>
-	   					<input type="radio" id="3-option" name="selector">
-	   					<label for="3-option">3</label>
-	   					<input type="radio" id="4-option" name="selector">
-	   					<label for="4-option">4</label>
-	   					<input type="radio" id="5-option" name="selector">
-	   					<label for="5-option">5</label>
-	   					<input type="radio" id="6-option" name="selector">
-	   					<label for="6-option">6</label>
+							<span class="icon-user"><i class="fa fa-male" aria-hidden="true"></i></span>
+							<input type="radio" id="1-option" name="people-selector" checked="checked">
+		   					<label for="1-option">1</label>
+		   					<input type="radio" id="2-option" name="people-selector">
+		   					<label for="2-option">2</label>
+		   					<input type="radio" id="3-option" name="people-selector">
+		   					<label for="3-option">3</label>
+		   					<input type="radio" id="4-option" name="people-selector">
+		   					<label for="4-option">4</label>
+		   					<input type="radio" id="5-option" name="people-selector">
+		   					<label for="5-option">5</label>
+		   					<input type="radio" id="6-option" name="people-selector">
+		   					<label for="6-option">6</label>
 	   					</form>
 	   				</div>
 				</div>
 				<div class="btn-choice">
 					<button id="btn-back-people" class="btn-light"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;GO BACK</button>
-					<button id="btn-next-people" class="btn float-right">NEXT&nbsp;<i class="fa fa-arrow-right dark" aria-hidden="true"></i></button>
+					<button id="btn-next-people" class="btn float-right">NEXT&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 				</div>
 			</div>
 				<div class="image-row big">
@@ -90,41 +90,112 @@
 				<div class="lightgreen-line-h">	
 				</div>
 				<div class="text-mid-row">
-					How many days are you travelling for?
+					<b>How many days are you travelling for, in total?</b>
 					<br>
 					<div class="radio-form">
-						<span class="icon-date"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-						<input type="radio" id="1-option-days" name="selector" checked="checked">
-	   					<label for="1-option">1</label>
-	   					<input type="radio" id="2-option-days" name="selector">
-	   					<label for="2-option">2</label>
-	   					<input type="radio" id="3-option-days" name="selector">
-	   					<label for="3-option">3</label>
-	   					<input type="radio" id="4-option-days" name="selector">
-	   					<label for="3-option">4</label>
-	   					<input type="radio" id="5-option-days" name="selector">
-	   					<label for="3-option">5</label>
-	   					<input type="radio" id="6-option-days" name="selector">
-	   					<label for="3-option">6</label>
+						<form id="days-form">
+							<span class="icon-date"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+							<input type="radio" id="1-option-days" name="days-selector" checked="checked" value="1">
+		   					<label for="1-option">1</label>
+		   					<input type="radio" id="2-option-days" name="days-selector" value="2">
+		   					<label for="2-option">2</label>
+		   					<input type="radio" id="3-option-days" name="days-selector" value="3">
+		   					<label for="3-option">3</label>
+		   					<input type="radio" id="4-option-days" name="days-selector" value="4">
+		   					<label for="3-option">4</label>
+		   					<input type="radio" id="5-option-days" name="days-selector" value="5">
+		   					<label for="3-option">5</label>
+		   					<input type="radio" id="6-option-days" name="days-selector" value="6">
+		   					<label for="3-option">6</label>
+	   					</form>
 	   					<div id="specify-days-container">
 	   					<span class="icon-date"><i class="fa fa-question-circle-o" aria-hidden="true"></i></span>
-	   						<label for="specify-days">Or type in amount of days: </label>
-	   						<input type="text" id="specify-days" name="days-input">
+	   						<label for="specify-days">Or type in specific amount of days: </label>
+	   						<input type="text" id="specify-days" name="days-input"><span id="tick-days"><i class="fa fa-check" aria-hidden="true"></i></span>
+	   						<div id="error-days"></div>
 	   					</div>
 	   				</div>
 				</div>
 				<div class="btn-choice">
 					<button id="btn-back-days" class="btn-light"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;GO BACK</button>
-					<button id="btn-next-days" class="btn float-right">NEXT&nbsp;<i class="fa fa-arrow-right dark" aria-hidden="true"></i></button>
+					<button id="btn-next-days" class="btn float-right">NEXT&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 				</div>
 			</div>
 				<div class="image-row big">
 			</div>
 		</div>
-
+		<!--modal: choose vehicle -->
+		<div id="modal-4-vehicle" class="center modal">
+			<div class="top-row-logo">
+				<div class="green-line-h">						
+				</div>
+				<div class="header-container">
+					<img src="img/tnz-logo.png">
+				</div>
+			</div>
+			<div class="middle-row-content">
+				<div class="lightgreen-line-h">	
+				</div>
+				<div class="text-mid-row">
+					<b>What vehicle would you like to hire?</b>
+				</div>
+				<div id="vehicles-container">
+					<div class="vehicle-item" id="motorbike">
+						<b>MOTOR<br>BIKE</b><span class="check-box"></span>
+						<div class="icon-vehicle">
+							<i class="fa fa-motorcycle" aria-hidden="true"></i>
+						</div>
+						<p class="description-vehicle">Hire cost:
+							$109/Day<br><br>
+							Fuel use:<br>
+							3.7l/100km
+						</p>
+					</div>
+					<div class="vehicle-item" id="small-car">
+						<b>SMALL<br>CAR</b><span class="check-box"></span>
+						<div class="icon-vehicle">
+							<i class="fa fa-car" aria-hidden="true"></i>
+						</div>
+						<p class="description-vehicle">Hire cost:
+							$129/Day<br><br>
+							Fuel use:<br>
+							8.5l/100km
+						</p>
+					</div>
+					<div class="vehicle-item" id="large-car">
+						<b>LARGE<br>CAR</b><span class="check-box"></span>
+						<div class="icon-vehicle">
+							<i class="fa fa-car" aria-hidden="true"></i>
+						</div>
+							<p class="description-vehicle">Hire cost:
+							$144/Day<br><br>
+							Fuel use:<br>
+							9.7l/100km
+						</p>
+					</div>
+					<div class="vehicle-item" id="motorhome">
+						<b>MOTOR<br>HOME</b><span class="check-box"></span>
+						<div class="icon-vehicle img-icon" id="motorhome-icon">
+							<img src="img/motorhome-icon2.png" alt="Motorhome">
+						</div>
+						<p class="description-vehicle">Hire cost:
+							$200/Day<br><br>
+							Fuel use:<br>
+							17l/100km
+						</p>
+					</div>
+				</div>
+				<div class="btn-choice">
+					<button id="btn-back-vehicle" class="btn-light"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;GO BACK</button>
+					<button id="btn-next-vehicle" class="btn float-right">NEXT&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+				</div>
+			</div>
+				<div class="image-row big">
+			</div>
+		</div>
 		<!-- comment this out -->
 
-		<div id="options">
+<!-- 		<div id="options">
 			<h2>Options</h2>
 			<h3><i class="fa fa-location-arrow" aria-hidden="true"></i> Find location</h3>
 				<button type="button" id="find-location">Find your location</button>	
@@ -140,12 +211,12 @@
 			<b>No route. </b>Find your location, then click on the map to plot a route.
 			</div>
 		</div>
-<!--   			 <div class="popup">
+  			 <div class="popup">
 			  <span class="popuptext" id="myPopup">
 				Please enable find your location to plot routes.
 				</span>
-			</div> -->
-		</div>
+			</div>
+		</div> -->
 
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTyDvknTresdDUNlgeA-3vUYSMF-dcx4M&libraries=geometry"></script>
 		<!-- <script src="js/script.js" type="text/javascript"></script> -->
