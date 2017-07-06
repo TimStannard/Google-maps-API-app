@@ -1,9 +1,38 @@
-var map, marker, infobox, userLocation, clickmarker, directionService, directionDisplay, closestMarker, savedLocation;
+var map, mapOptions, originPlaced, destPlaced, placeRoute;
 var travelMethod = "DRIVING";
+var peopleChosen = 1;
+var DaysChosen = 1;
+var ValidDays = false;
+var DaysWords = "oneDay";
+var RadioNumberSelected = true;
+var motorhomeSelected = false;
+var DaysPattern = /^\d+$/;
+var mixer = mixitup('#vehicles-container');
+var VehicleArray = [
+    {
+      vehicleName: "Motorbike",
+      CostPerDay: "109",
+      FuelEconomy: "3.7"
+    },
+    {
+      vehicleName: "Small car",
+      CostPerDay: "129",
+      FuelEconomy: "8.5"
+    },
+    {
+      vehicleName: "Large car",
+      CostPerDay: "144",
+      FuelEconomy: "9.7"
+    },
+    {
+      vehicleName: "Motor home",
+      CostPerDay: "200",
+      FuelEconomy: "17"
+    }
+  ];
 
 function init(){
-
-    var mapOptions = {
+    mapOptions = {
         //set where the map starts
         center : {
             lat:-40.245063,
@@ -161,229 +190,93 @@ function init(){
 // set google maps into div
 
   map = new google.maps.Map(document.getElementById("map"), mapOptions)
-
-// adding markers
-  google.maps.event.addListener(map, 'click', function(event) {
-     // placeMarker(event.latLng);
-  });
-
+  placeRoute = new AutocompleteDirectionsHandler(map);
+  var destinationSaved;
 }
 
-//function to place one marker at a time
-  function placeMarker(location) {
+//clear address inputs and hide errors if correct destination is there
 
-if (yourlocation) {
-      savedLocation = location;
-    if (clickmarker){
-      clickmarker.setMap(null);
-    }
+$("#origin-input").focus(function(){
+  $(this).val("");
+  originPlaced = false;
+});
 
-       clickmarker = new google.maps.Marker({
-          position: location, 
-          map: map
-      });
-      markers.push(clickmarker);
-      showDirection(location);
-    }else{
-      popup();
-    }
-      
-  }
-
-  //plot route from marker
-
-function showDirection(location){
-  if (directionDisplay) {
-    directionDisplay.setMap(null);
-  }
-  directionService = new google.maps.DirectionsService();
-  directionDisplay = new google.maps.DirectionsRenderer();
-
-  directionDisplay.setMap(map);
-  directionService.route({
-    origin: userLocation.position,
-    destination: {location},
-    travelMode: google.maps.TravelMode[travelMethod] 
-    // transitOptions: 
-  }, function(response, status){
-    if(status =="OK"){
-      directionDisplay.setDirections(response);
-      // console.log(response);
-      updateRouteText(response.routes[0].legs[0].distance.text, response.routes[0].legs[0].duration.text, response.routes[0].legs[0].start_address, response.routes[0].legs[0].end_address);
-    }else if (status =="NOT_FOUND"){
-alert("not found");
-    }else if (status =="ZERO_RESULTS"){
-      alert("Zero results found");
-
-    }
-  });
-}
-
-//updates text of route info
-
-function updateRouteText(distance, duration, start, end){
-  $("#route-text").html('<b>' + travelMethod + '</b><br>' + '<b>Your location: </b>' + start + '<br><b>Travelling to: </b>' + end + '<br><b>Distance: </b>'+ distance + '<br>'+ '<b>Duration: </b>' + duration)
-}
-
-//add markers
-
-function addAllMarkers(){
-  for (var i = 0; i < AllMarkers.length; i++) {
-    marker = new google.maps.Marker({
-      position:{
-        lat: AllMarkers[i].lat,
-        lng: AllMarkers[i].lng
-      },
-      map: map,
-      // icon: "img/cinema-icon.png",
-      title: AllMarkers[i].title,
-      description: AllMarkers[i].description
-    })
-    
-    markers.push(marker);
-    Allinfobox(marker);
-
-  };
-}
-
-//bounce animation
-
-function toggleBounce(){
-  if(marker.getAnimation() === null){
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-  } else {
-    marker.setAnimation(null);
-  }
-}
-
-//load info boxes
-
-function Allinfobox(marker){
-  if(infobox){
-    infobox.close();
-  }
-  infobox = new google.maps.InfoWindow();
-  google.maps.event.addListener(marker, "click", function(){ 
-    infobox.setContent("<div><strong>"+marker.title+"</strong></div><hr>"+
-              "<div>"+marker.description+"</div>"
-      );
-    infobox.open(map, marker);
-    placeMarker(marker.position);
-
-  });
-}
-
-//toggle markers function show/hide
-
-var toggleMarkerOn = true;
-function toggleMarkers(){
-  for (var i = 0; i < markers.length; i++) {
-    if(toggleMarkerOn === true){
-      markers[i].setMap(null);
-    } else {
-      markers[i].setMap(map);
-    }
-  };
-  if(toggleMarkerOn === true){
-    toggleMarkerOn = false;
-  } else {
-    toggleMarkerOn = true;
-  }
-}
-
-//get user position
-
-function findUser(){
-  if(navigator.geolocation){
-
-    navigator.geolocation.getCurrentPosition(function(position){
-      userLocation = new google.maps.Marker({
-        position: {
-                  lat: position.coords.latitude,
-                  lng: position.coords.longitude
-         },
-        map: map,
-        icon: "img/you-pin.png",
-        animation: google.maps.Animation.DROP,
-      });
-      userLocation.setAnimation(google.maps.Animation.BOUNCE);
-      map.panTo(userLocation.position);
+$("#destination-input").focus(function(){
+  $(this).val("");
+  destPlaced = false;
+});
 
 
-      // FindClosestMarker();
-      //run this if required
-    })
-  }
-}
-
-// function FindClosestMarker(){
-//   var closestDistance = 99999999999999999999; //this function shows us the distance in a straight line 
-//   for (var i = 0; i < markers.length; i++) {
-//     var SingleMarker = markers[i];
-//     var distance = google.maps.geometry.spherical.computeDistanceBetween(userLocation.position, SingleMarker.position); 
-
-//     if (distance < closestDistance){
-//       closestDistance = distance;
-//       closestMarker = SingleMarker;
-      
-//     }
-//   }
-//   console.log(closestMarker);
-// }
-
-var yourlocation = false;
-
-//toggle user location button
-
-$("#find-location").click(function() {
-      $("#myPopup").removeClass("show");
-  if (!yourlocation) {
-      $("#find-location").html('Turn off your location');
-      yourlocation = !yourlocation;
-      $(this).addClass("selected");
-      findUser();
-    }else{
-      $("#find-location").html('Find your location');
-      yourlocation = !yourlocation;
-      userLocation.setMap(null);
-      $(this).removeClass("selected");
-    }
-
-
-})
-
-//route buttons
-
-$(".button-route").click(function() {
+//route plotting
  
-  $(".button-route").removeClass("selected");
-    $(this).addClass("selected");
-    travelMethod = $(this).attr('data-mode');
+function AutocompleteDirectionsHandler(map) {
+  this.map = map;
+  this.originPlaceId = null;
+  this.destinationPlaceId = null;
+  this.travelMode = 'DRIVING';
+  var originInput = document.getElementById('origin-input');
+  var destinationInput = document.getElementById('destination-input');
+  this.directionsService = new google.maps.DirectionsService;
+  this.directionsDisplay = new google.maps.DirectionsRenderer;
+  this.directionsDisplay.setMap(map);
 
-    if(savedLocation) showDirection(savedLocation);
-})
+  var originAutocomplete = new google.maps.places.Autocomplete(
+      originInput, {placeIdOnly: true, componentRestrictions: {country: "NZ"}
+    });
+  var destinationAutocomplete = new google.maps.places.Autocomplete(
+      destinationInput, {placeIdOnly: true, componentRestrictions: {country: "NZ"}
+    });
+    destinationSaved = destinationAutocomplete;
 
-//toggling the markers button
+  this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+  this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+}
 
-$("#toggleMarkers").click(function() {
- if ($(this).hasClass( "selected" )){
-    $(this).toggleClass("selected");
-   $(this).html('Toggle markers on');
-  }else{
-    $(this).toggleClass("selected");
-   $(this).html('Toggle markers off');
+AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
+  var me = this;
+  autocomplete.bindTo('bounds', this.map);
+  autocomplete.addListener('place_changed', function() {
+    var place = autocomplete.getPlace();
+    if (!place.place_id) {
+      window.alert("Please select an option from the dropdown list.");
+      return;
+    }
+    if (mode === 'ORIG') {
+      me.originPlaceId = place.place_id;
+      originPlaced = true;
+    } else {
+      me.destinationPlaceId = place.place_id;
+      destPlaced = true;
+    }
+
+    if(originPlaced && destPlaced) $("#error-dest").text("");
+
+
+  });
+
+};
+
+AutocompleteDirectionsHandler.prototype.route = function() {
+  if (!this.originPlaceId || !this.destinationPlaceId) {
+    return;
   }
+  var me = this;
 
+  this.directionsService.route({
+    origin: {'placeId': this.originPlaceId},
+    destination: {'placeId': this.destinationPlaceId},
+    travelMode: this.travelMode
+  }, function(response, status) {
+    if (status === 'OK') {
+      me.directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+};
 
-})
 
 // normal code here
-
-var DaysChosen = 1;
-var ValidDays = false;
-var RadioNumberSelected = true;
-var motorhomeSelected = false;
-var DaysPattern = /^\d+$/;
 
 $(document).ready(function() {
 
@@ -401,12 +294,29 @@ $(document).ready(function() {
 
     $(".modal.center").each(function(){
 
-    $(this).css("top", ($(window).height()/2) - ($(this).height()/2) - 30 );
+    $(this).css("top", ($(window).height()/2) - ($(this).height()/2) - 50 );
     $(this).css("left", ($(window).width()/2) - ($(this).width()/2) );
 
     });
 
   }).trigger("resize");
+
+//unlock map function
+
+ function unlockMap(){
+  mapOptions = {
+         
+          disableDefaultUI: false, //turn off user interface
+          scrollwheel: true,
+          draggable: true,
+          draggableCursor: "pointer",
+          draggingCursor: "pointer",
+          fullscreenControl: false,
+          disableDoubleClickZoom: false,
+          keyboardShortcuts: true
+      };
+      map.setOptions(mapOptions);
+ };
 
 // validate amount of days
 
@@ -472,6 +382,7 @@ $(document).ready(function() {
       $(this).addClass('v-selected');
       $('.check-box').text('');
       $(this).find('.check-box').text('\u2714');
+      $("#error-vehicles").text("");
     });
 
   $( "#motorhome" ).mouseover(function() {
@@ -500,6 +411,7 @@ $(document).ready(function() {
   });
 
     $('#btn-next-people').click(function() {
+    peopleChosen = ($("[name=people-selector]:checked").val() + "Ppl");
     $('#modal-2-people').css("display", "none");
     $('#modal-3-days').css("display", "inline-block");
   });
@@ -514,13 +426,14 @@ $(document).ready(function() {
         DaysChosen = $("#specify-days").val();
         $('#modal-4-vehicle').css("display", "inline-block");
         $('#modal-3-days').css("display", "none");
-        console.log(DaysChosen);
+        DaysWords = (toWords(DaysChosen) + "Day");
       }else if (ValidDays == false && RadioNumberSelected == true){
         DaysChosen = $("[name=days-selector]:checked").val();
         $('#modal-4-vehicle').css("display", "inline-block");
         $('#modal-3-days').css("display", "none");
-        console.log(DaysChosen);
+        DaysWords = (toWords(DaysChosen) + "Day");
     }
+    CreateVehicleMix();
   });
 
     $('#btn-back-vehicle').click(function() {
@@ -528,12 +441,52 @@ $(document).ready(function() {
     $('#modal-3-days').css("display", "inline-block");
   });
 
+  $('#btn-next-vehicle').click(function() {
+    if ($(".v-selected").is(":visible")) {
+      console.log("selected vehicle: " + $(".v-selected").attr('data-vehicle-type'));
+
+      for (var i = 0; i < VehicleArray.length; i++) {
+        if ($(".v-selected").attr('data-vehicle-type') == VehicleArray[i].vehicleName) {
+            console.log(VehicleArray[i]);
+          }
+        }
+
+      $('#modal-4-vehicle').css("display", "none"); 
+      $('#modal-5-address').css("display", "inline-block"); 
+    }else{
+      $("#error-vehicles").text("\u2757 Please choose a vehicle.");
+      
+    }
+
+  $('#btn-back-address').click(function() {
+      $('#modal-4-vehicle').css("display", "inline-block");
+      $('#modal-5-address').css("display", "none");
+    });
+  $('#btn-next-address').click(function() {
+      if (originPlaced && destPlaced == true) {
+      //create route here
+      $('#modal-5-address').addClass('hide');
+      $('#modal-5-address').css("opacity", "0");
+      $('#modal-5-address').css("transform", "scale(0.75, 0.75)");
+      setTimeout(function(){
+        $('#modal-5-address').css("display", "none");
+      }, 300);
+      unlockMap(); 
+      placeRoute.route();
+      }else {
+        $("#error-dest").text("\u2757 Both start and end addresses are required.");
+      }
+
+     });      
+     
+  });
+
+  function CreateVehicleMix(){
+    var FilterVariable = "." + DaysWords + "." + peopleChosen;
+    mixer.filter(FilterVariable);
+  }
+
 });
 
-//popups
-function popup() {
-    var popup = document.getElementById("myPopup");
-    popup.classList.toggle("show");
-}
 //load map at end
   google.maps.event.addDomListener(window, 'load', init);

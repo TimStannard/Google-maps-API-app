@@ -3,226 +3,239 @@
 	<head>
 	 	<link rel="stylesheet" href="css/style.css">
 	 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Overpass:100,200,300,400,500,600,900">
+	 	<link rel="stylesheet" href="css/font-awesome-animation.min.css">
 	 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,900">
 		<title>Tourism NZ - Route Planner</title>
 	</head>
 	<body>
-	<div id="container">
-		<div id="map">
-		</div>
-		<!-- modal: welcome message -->
-		<div id="modal-1-start" class="center modal">
-			<div class="top-row-logo">
-				<div class="green-line-h">		
-				</div>
-				<div class="header-container">
-					<img src="img/tnz-logo.png">
-					<span class="help-bubble">
-					<i class="fa fa-question-circle" aria-hidden="true"></i>
-					</span>
-				</div>
+		<div id="container">
+			<div id="map">
 			</div>
-			<div class="middle-row-content">
-				<div class="lightgreen-line-h"></div>
-					<div class="text-welcome float-left">
-						<span class="welcome-text">
-						<b>Start a new route:</b>
+			<!-- modal: welcome message -->
+			<div id="modal-1-start" class="center modal">
+				<div class="top-row-logo">
+					<div class="green-line-h">		
+					</div>
+					<div class="header-container">
+						<img src="img/tnz-logo.png">
+						<span class="help-bubble">
+						&nbsp;<i class="fa fa-question-circle-o faa-burst animated-hover faa-fast" aria-hidden="true"></i>
 						</span>
 					</div>
-					<div class="btn-mid-row">
-						<button id="go" class="btn">GO&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-					</div>
-			</div>
-			<div class="image-row">
-			</div>
-		</div>
-		<!--modal: choose people -->
-		<div id="modal-2-people" class="center modal">
-			<div class="top-row-logo">
-				<div class="green-line-h">						
 				</div>
-				<div class="header-container">
-					<img src="img/tnz-logo.png">
-				</div>
-			</div>
-			<div class="middle-row-content">
-				<div class="lightgreen-line-h">	
-				</div>
-				<div class="text-mid-row">
-					<b>How many people are travelling, including yourself?</b>
-					<div class="radio-form">
-						<form>
-							<span class="icon-user"><i class="fa fa-male" aria-hidden="true"></i></span>
-							<input type="radio" id="1-option" name="people-selector" checked="checked">
-		   					<label for="1-option">1</label>
-		   					<input type="radio" id="2-option" name="people-selector">
-		   					<label for="2-option">2</label>
-		   					<input type="radio" id="3-option" name="people-selector">
-		   					<label for="3-option">3</label>
-		   					<input type="radio" id="4-option" name="people-selector">
-		   					<label for="4-option">4</label>
-		   					<input type="radio" id="5-option" name="people-selector">
-		   					<label for="5-option">5</label>
-		   					<input type="radio" id="6-option" name="people-selector">
-		   					<label for="6-option">6</label>
-	   					</form>
-	   				</div>
-				</div>
-				<div class="btn-choice">
-					<button id="btn-back-people" class="btn-light"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;GO BACK</button>
-					<button id="btn-next-people" class="btn float-right">NEXT&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-				</div>
-			</div>
-				<div class="image-row big">
-			</div>
-		</div>
-		<!--modal: choose times (days) -->
-		<div id="modal-3-days" class="center modal">
-			<div class="top-row-logo">
-				<div class="green-line-h">						
-				</div>
-				<div class="header-container">
-					<img src="img/tnz-logo.png">
-				</div>
-			</div>
-			<div class="middle-row-content">
-				<div class="lightgreen-line-h">	
-				</div>
-				<div class="text-mid-row">
-					<b>How many days are you travelling for, in total?</b>
-					<br>
-					<div class="radio-form">
-						<form id="days-form">
-							<span class="icon-date"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-							<input type="radio" id="1-option-days" name="days-selector" checked="checked" value="1">
-		   					<label for="1-option">1</label>
-		   					<input type="radio" id="2-option-days" name="days-selector" value="2">
-		   					<label for="2-option">2</label>
-		   					<input type="radio" id="3-option-days" name="days-selector" value="3">
-		   					<label for="3-option">3</label>
-		   					<input type="radio" id="4-option-days" name="days-selector" value="4">
-		   					<label for="3-option">4</label>
-		   					<input type="radio" id="5-option-days" name="days-selector" value="5">
-		   					<label for="3-option">5</label>
-		   					<input type="radio" id="6-option-days" name="days-selector" value="6">
-		   					<label for="3-option">6</label>
-	   					</form>
-	   					<div id="specify-days-container">
-	   					<span class="icon-date"><i class="fa fa-question-circle-o" aria-hidden="true"></i></span>
-	   						<label for="specify-days">Or type in specific amount of days: </label>
-	   						<input type="text" id="specify-days" name="days-input"><span id="tick-days"><i class="fa fa-check" aria-hidden="true"></i></span>
-	   						<div id="error-days"></div>
-	   					</div>
-	   				</div>
-				</div>
-				<div class="btn-choice">
-					<button id="btn-back-days" class="btn-light"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;GO BACK</button>
-					<button id="btn-next-days" class="btn float-right">NEXT&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-				</div>
-			</div>
-				<div class="image-row big">
-			</div>
-		</div>
-		<!--modal: choose vehicle -->
-		<div id="modal-4-vehicle" class="center modal">
-			<div class="top-row-logo">
-				<div class="green-line-h">						
-				</div>
-				<div class="header-container">
-					<img src="img/tnz-logo.png">
-				</div>
-			</div>
-			<div class="middle-row-content">
-				<div class="lightgreen-line-h">	
-				</div>
-				<div class="text-mid-row">
-					<b>What vehicle would you like to hire?</b>
-				</div>
-				<div id="vehicles-container">
-					<div class="vehicle-item" id="motorbike">
-						<b>MOTOR<br>BIKE</b><span class="check-box"></span>
-						<div class="icon-vehicle">
-							<i class="fa fa-motorcycle" aria-hidden="true"></i>
+				<div class="middle-row-content">
+					<div class="lightgreen-line-h"></div>
+						<div class="text-welcome float-left">
+							<span class="welcome-text">
+							<b>Start a new route:</b>
+							</span>
 						</div>
-						<p class="description-vehicle">Hire cost:
-							$109/Day<br><br>
-							Fuel use:<br>
-							3.7l/100km
-						</p>
-					</div>
-					<div class="vehicle-item" id="small-car">
-						<b>SMALL<br>CAR</b><span class="check-box"></span>
-						<div class="icon-vehicle">
-							<i class="fa fa-car" aria-hidden="true"></i>
+						<div class="btn-mid-row">
+							<button id="go" class="btn">GO&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 						</div>
-						<p class="description-vehicle">Hire cost:
-							$129/Day<br><br>
-							Fuel use:<br>
-							8.5l/100km
-						</p>
+				</div>
+				<div class="image-row">
+				</div>
+			</div>
+			<!--modal: choose people -->
+			<div id="modal-2-people" class="center modal">
+				<div class="top-row-logo">
+					<div class="green-line-h">						
 					</div>
-					<div class="vehicle-item" id="large-car">
-						<b>LARGE<br>CAR</b><span class="check-box"></span>
-						<div class="icon-vehicle">
-							<i class="fa fa-car" aria-hidden="true"></i>
-						</div>
+					<div class="header-container">
+						<img src="img/tnz-logo.png">
+					</div>
+				</div>
+				<div class="middle-row-content">
+					<div class="lightgreen-line-h">	
+					</div>
+					<div class="text-mid-row">
+						<b>How many people are travelling, including yourself?</b>
+						<div class="radio-form">
+							<form>
+								<span class="icon-user"><i class="fa fa-male" aria-hidden="true"></i></span>
+								<input type="radio" id="1-option" name="people-selector" checked="checked" value="one">
+			   					<label for="1-option">1</label>
+			   					<input type="radio" id="2-option" name="people-selector" value="two">
+			   					<label for="2-option">2</label>
+			   					<input type="radio" id="3-option" name="people-selector" value="three">
+			   					<label for="3-option">3</label>
+			   					<input type="radio" id="4-option" name="people-selector" value="four">
+			   					<label for="4-option">4</label>
+			   					<input type="radio" id="5-option" name="people-selector" value="five">
+			   					<label for="5-option">5</label>
+			   					<input type="radio" id="6-option" name="people-selector" value="six">
+			   					<label for="6-option">6</label>
+		   					</form>
+		   				</div>
+					</div>
+					<div class="btn-choice">
+						<button id="btn-back-people" class="btn-light"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;GO BACK</button>
+						<button id="btn-next-people" class="btn float-right">NEXT&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+					</div>
+				</div>
+					<div class="image-row big">
+				</div>
+			</div>
+			<!--modal: choose times (days) -->
+			<div id="modal-3-days" class="center modal">
+				<div class="top-row-logo">
+					<div class="green-line-h">						
+					</div>
+					<div class="header-container">
+						<img src="img/tnz-logo.png">
+					</div>
+				</div>
+				<div class="middle-row-content">
+					<div class="lightgreen-line-h">	
+					</div>
+					<div class="text-mid-row">
+						<b>How many days are you travelling for, in total?</b>
+						<br>
+						<div class="radio-form">
+							<form id="days-form">
+								<span class="icon-date"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+								<input type="radio" id="1-option-days" name="days-selector" checked="checked" value="1">
+			   					<label for="1-option">1</label>
+			   					<input type="radio" id="2-option-days" name="days-selector" value="2">
+			   					<label for="2-option">2</label>
+			   					<input type="radio" id="3-option-days" name="days-selector" value="3">
+			   					<label for="3-option">3</label>
+			   					<input type="radio" id="4-option-days" name="days-selector" value="4">
+			   					<label for="3-option">4</label>
+			   					<input type="radio" id="5-option-days" name="days-selector" value="5">
+			   					<label for="3-option">5</label>
+			   					<input type="radio" id="6-option-days" name="days-selector" value="6">
+			   					<label for="3-option">6</label>
+		   					</form>
+		   					<div id="specify-days-container">
+		   					<span class="icon-date"><i class="fa fa-question-circle-o" aria-hidden="true"></i></span>
+		   						<label for="specify-days">Or type in specific amount of days: </label>
+		   						<input type="text" id="specify-days" name="days-input"><span id="tick-days"><i class="fa fa-check" aria-hidden="true"></i></span>
+		   						<div id="error-days"></div>
+		   					</div>
+		   				</div>
+					</div>
+					<div class="btn-choice">
+						<button id="btn-back-days" class="btn-light"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;GO BACK</button>
+						<button id="btn-next-days" class="btn float-right">NEXT&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+					</div>
+				</div>
+					<div class="image-row big">
+				</div>
+			</div>
+			<!--modal: choose vehicle -->
+			<div id="modal-4-vehicle" class="center modal">
+				<div class="top-row-logo">
+					<div class="green-line-h">						
+					</div>
+					<div class="header-container">
+						<img src="img/tnz-logo.png">
+					</div>
+				</div>
+				<div class="middle-row-content">
+					<div class="lightgreen-line-h">	
+					</div>
+					<div class="text-mid-row">
+						<b>What vehicle would you like to hire?</b>
+					</div>
+					<div id="error-vehicles"></div>
+					<div id="vehicles-container" class="mix-container">
+						<div class="vehicle-item mix onePpl oneDay twoDay threeDay fourDay fiveDay" id="motorbike" data-vehicle-type="Motorbike">
+							<b>MOTOR<br>BIKE</b><span class="check-box"></span>
+							<div class="icon-vehicle one">
+								<i class="fa fa-motorcycle" aria-hidden="true"></i>
+							</div>
 							<p class="description-vehicle">Hire cost:
-							$144/Day<br><br>
-							Fuel use:<br>
-							9.7l/100km
-						</p>
-					</div>
-					<div class="vehicle-item" id="motorhome">
-						<b>MOTOR<br>HOME</b><span class="check-box"></span>
-						<div class="icon-vehicle img-icon" id="motorhome-icon">
-							<img src="img/motorhome-icon2.png" alt="Motorhome">
+								$109/Day<br><br>
+								Fuel use:<br>
+								3.7l/100km
+							</p>
 						</div>
-						<p class="description-vehicle">Hire cost:
-							$200/Day<br><br>
-							Fuel use:<br>
-							17l/100km
-						</p>
+						<div class="vehicle-item mix onePpl twoPpl oneDay twoDay threeDay fourDay fiveDay sixDay sevenDay eightDay nineDay tenDay" id="small-car" data-vehicle-type="Small car">
+							<b>SMALL<br>CAR</b><span class="check-box"></span>
+							<div class="icon-vehicle">
+								<i class="fa fa-car" aria-hidden="true"></i>
+							</div>
+							<p class="description-vehicle">Hire cost:
+								$129/Day<br><br>
+								Fuel use:<br>
+								8.5l/100km
+							</p>
+						</div>
+						<div class="vehicle-item mix twoPpl threePpl fourPpl fivePpl threeDay fourDay fiveDay sixDay sevenDay eightDay nineDay tenDay" id="large-car" data-vehicle-type="Large car">
+							<b>LARGE<br>CAR</b><span class="check-box"></span>
+							<div class="icon-vehicle">
+								<i class="fa fa-car" aria-hidden="true"></i>
+							</div>
+								<p class="description-vehicle">Hire cost:
+								$144/Day<br><br>
+								Fuel use:<br>
+								9.7l/100km
+							</p>
+						</div>
+						<div class="vehicle-item mix twoPpl threePpl fourPpl fivePpl sixPpl twoDay threeDay fourDay fiveDay sixDay sevenDay eightDay nineDay tenDay elevenDay twelveDay thirteenDay fourteenDay fifteenDay" id="motorhome" data-vehicle-type="Motorhome">
+							<b>MOTOR<br>HOME</b><span class="check-box"></span>
+							<div class="icon-vehicle img-icon" id="motorhome-icon">
+								<img src="img/motorhome-icon2.png" alt="Motorhome">
+							</div>
+							<p class="description-vehicle">Hire cost:
+								$200/Day<br><br>
+								Fuel use:<br>
+								17l/100km
+							</p>
+						</div>
+					</div>
+					<div class="btn-choice">
+						<button id="btn-back-vehicle" class="btn-light"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;GO BACK</button>
+						<button id="btn-next-vehicle" class="btn float-right">NEXT&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 					</div>
 				</div>
-				<div class="btn-choice">
-					<button id="btn-back-vehicle" class="btn-light"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;GO BACK</button>
-					<button id="btn-next-vehicle" class="btn float-right">NEXT&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+					<div class="image-row big">
 				</div>
 			</div>
+			<!--modal: choose address  -->
+			<div id="modal-5-address" class="center modal">
+				<div class="top-row-logo">
+					<div class="green-line-h">						
+					</div>
+					<div class="header-container">
+						<img src="img/tnz-logo.png">
+					</div>
+				</div>
+				<div class="middle-row-content">
+					<div class="lightgreen-line-h">	
+					</div>
+					<div class="text-mid-row">
+						<b>Where are you planning to travel?</b>
+						<div id="error-dest"></div>
+						<div id="address-div">
+		   					<span class="icon-date"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+		   					<label for="specify-days">Start address: </label>
+		   					<input id="origin-input" class="controls" type="text" placeholder="Enter an origin location"><span id="tick-address-start"><i class="fa fa-check" aria-hidden="true"></i></span>
+							<div class="spacer-line-height"></div>	
+		   					<span class="icon-date"><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
+		   					<label for="specify-days">End address: </label>
+		   					<input id="destination-input" class="controls" type="text" placeholder="Enter a destination location"><span id="tick-address-end"><i class="fa fa-check" aria-hidden="true"></i></span>
+		   				</div>
+					</div>
+					<div class="btn-choice">
+						<button id="btn-back-address" class="btn-light"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;GO BACK</button>
+						<button id="btn-next-address" class="btn float-right">VIEW ROUTE AND INFO&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+					</div>
+				</div>
 				<div class="image-row big">
+				</div>
+			</div>
+			<!--modal: sidebar  -->
+			<div id="sidebar" class="sidebar">
+				
 			</div>
 		</div>
-		<!-- comment this out -->
-
-<!-- 		<div id="options">
-			<h2>Options</h2>
-			<h3><i class="fa fa-location-arrow" aria-hidden="true"></i> Find location</h3>
-				<button type="button" id="find-location">Find your location</button>	
-			<h3><i class="fa fa-map-marker" aria-hidden="true"></i> Markers</h3>
-				<button onclick="toggleMarkers();" type="button" class="selected" id="toggleMarkers">Toggle Markers Off</button>
-			<h3>Route plotting</h3>
-				<i class="fa fa-car" aria-hidden="true"></i> <button type="button" id="driving" class="button-route selected" data-mode="DRIVING">Driving</button>	
-				<i class="fa fa-male" aria-hidden="true"></i> <button type="button" id="walking" class="button-route" data-mode="WALKING">Walking</button><br>	
-				<i class="fa fa-bicycle" aria-hidden="true"></i><button type="button" id="cycling" class="button-route" data-mode="BICYCLING">Cycling</button>	
-				<i class="fa fa-bus" aria-hidden="true"></i> <button type="button" id="transit" class="button-route" data-mode="TRANSIT">Transit</button>	
-			<h3><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Current Route</h3>	
-			<div id="route-text">
-			<b>No route. </b>Find your location, then click on the map to plot a route.
-			</div>
-		</div>
-  			 <div class="popup">
-			  <span class="popuptext" id="myPopup">
-				Please enable find your location to plot routes.
-				</span>
-			</div>
-		</div> -->
-
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTyDvknTresdDUNlgeA-3vUYSMF-dcx4M&libraries=geometry"></script>
-		<!-- <script src="js/script.js" type="text/javascript"></script> -->
-		<!-- <script src="js/scriptFriday.js" type="text/javascript"></script> -->
-		<!-- <script src="js/altMarkers.js" type="text/javascript"></script> -->
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTyDvknTresdDUNlgeA-3vUYSMF-dcx4M&libraries=geometry,places"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script type="text/javascript" src="js/mixitup.js"></script>
+		<script type="text/javascript" src="js/numToWords.js"></script>
 		<script src="js/script.js" type="text/javascript"></script>
 		</script>
 	</body>

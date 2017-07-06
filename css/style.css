@@ -14,8 +14,12 @@ body {
 	padding: 0px;
 	margin: 0;
 	font-family: Roboto;
+	font-weight: 300;
 }
 
+b {
+	font-weight: 500;
+}
 /*Modal containers*/
 .center {
 	position: absolute;
@@ -27,10 +31,10 @@ body {
 	width: auto;
 	background-color: white;
 	box-sizing: border-box;
-	border: 2px solid #003d00;
-	-webkit-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.14);
-	-moz-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.14);
-	box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.14);
+	/*border: 2px solid #003d00;*/
+	-webkit-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.34);
+	-moz-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.34);
+	box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.34);
 }
 #modal-1-start{
 	-ms-transform: scale(0.75, 0.75); /* IE 9 */
@@ -54,7 +58,15 @@ body {
 
 #modal-4-vehicle {
 	display: none;
-	width: 680px;
+	width: 720px;
+
+}
+#modal-5-address {
+	display: none;
+	width: 580px;
+	transition: all 0.2s ease-out;
+    -webkit-transition: all 0.2s ease-out;
+
 }
 
 /*Modals*/
@@ -84,9 +96,15 @@ body {
 
 .help-bubble {
 	position: relative;
-	top: -83px;
-	left: 113px;
+	top: -118px;
+	left: 233px;
 	font-size: 28px;
+	padding:5px;
+	overflow:auto;
+	width:40px;
+	height:120px;
+	display: block;
+
 }
 .help-bubble:hover {
 	cursor: pointer;
@@ -149,8 +167,11 @@ body {
     font-size: 14px;
     margin: 0;
     border-radius: 5px;
-	border: 1px solid #003d00;
+	/*border: 1px solid #003d00;*/
 	transition: all 0.1s ease-out;
+    -webkit-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.10);
+    -moz-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.10);
+	box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.10);
 }
 .btn-light {
     background-color: white; 
@@ -163,12 +184,15 @@ body {
     font-size: 14px;
     margin: 0;
     border-radius: 5px;
-	border: 1px solid #232323;
-		transition: all 0.1s ease-out;
+	/*border: 1px solid #232323;*/
+	transition: all 0.1s ease-out;
+    -webkit-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.10);
+    -moz-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.10);
+	box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.10);
 }
 
 .btn:hover{
-	background-color: #5b8c21;
+	background-color: #629624;
 	cursor: pointer;
 }
 .btn-light:hover{
@@ -226,6 +250,10 @@ margin-right: 5px;
 	margin-left: 0px;
 }
 
+#days-form {
+	margin-top: 4px;
+}
+
 #specify-days {
 	width: 30px;
 	height: 26px;
@@ -234,7 +262,6 @@ margin-right: 5px;
 }
 
 #error-days {
-
 	display: block;
 	color: red;
 	margin-left: 14px;
@@ -243,11 +270,11 @@ margin-right: 5px;
     margin-top: 22px;
 }
 
-#error-days:empty {
+#error-days:empty, #error-vehicles:empty, #error-dest:empty {
 	display: none;
 }
 
-#tick-days {
+#tick-days, #tick-address-end, #tick-address-start {
 	color: green;
 	margin-left: 5px;
 	display: none;
@@ -255,7 +282,7 @@ margin-right: 5px;
 
 /*modal 4 - vehicle choice*/
 #vehicles-container {
-	margin-top: 28px;
+	margin-top: 22px;
 	/*margin-bottom: 20px;*/
 	display: block;
 	width: 100%;
@@ -263,13 +290,13 @@ margin-right: 5px;
 	box-sizing: border-box;
 	padding: 0px 42px 10px 42px;
 	height: auto;
-	overflow: auto;
+	overflow: hidden;
 }
 
 .vehicle-item {
 	float: left;
 	width:21.5%;
-	min-height: 196px;
+	min-height: 200px;
 	text-align: center;
 	box-sizing: border-box; 
 	letter-spacing: 3px;
@@ -280,9 +307,9 @@ margin-right: 5px;
 	margin-right: 10px;
 	color: #505050;
 	border: 1px dotted lightgrey;
-	-webkit-box-shadow: 3px 3px 6px 0px rgba(0,0,0,0.05);
-    -moz-box-shadow: 3px 3px 6px 0px rgba(0,0,0,0.05);
-	box-shadow: 3px 3px 6px 0px rgba(0,0,0,0.05);
+    -webkit-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.10);
+    -moz-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.10);
+	box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.10);
 
 }
 .vehicle-item:hover{
@@ -306,9 +333,9 @@ margin-right: 5px;
 	border: 2px dotted lightgrey;
 	background-color: white;
 	color: black;
-    -webkit-box-shadow: 3px 3px 6px 0px rgba(0,0,0,0.10);
-    -moz-box-shadow: 3px 3px 6px 0px rgba(0,0,0,0.10);
-	box-shadow: 3px 3px 6px 0px rgba(0,0,0,0.10);
+    -webkit-box-shadow: 3px 3px 2px 0px rgba(0,0,0,0.10);
+    -moz-box-shadow: 3px 3px 2px 0px rgba(0,0,0,0.10);
+	box-shadow: 3px 3px 2px 0px rgba(0,0,0,0.10);
 }
 
 .description-vehicle {
@@ -326,6 +353,59 @@ margin-right: 5px;
 	font-size: 16px;
 	position: relative;
 	left: 3px;
+}
+
+#error-vehicles {
+		padding: 10px 42px 0px 42px;
+		color: red;
+}
+
+/*modal 5-address container*/
+
+#address-div {
+	margin-top:12px;
+		margin-bottom:8px;
+}
+
+.spacer-line-height {
+	padding: 6px;
+}
+
+.controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+      }
+
+      #origin-input,
+      #destination-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 17px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 62%;
+      }
+      #destination-input{
+      	margin-left: 20px;
+      }
+
+      #origin-input:focus,
+      #destination-input:focus {
+        border-color: #4d90fe;
+      }
+
+#error-dest {
+		padding: 10px 0px 0px 0px;
+		color: red;
 }
 
 /*map css*/
@@ -376,50 +456,4 @@ button {
 #route-text {
 	background-color: #ededed;
 	padding: 15px;
-}
-
-.popup {
-    position: absolute;
-    left: 476px;
-    top: 208px;
-    display: inline-block;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-/* The actual popup */
-.popup .popuptext {
-    visibility: hidden;
-    width: 160px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 12px 3px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -80px;
-}
-
-/* Toggle this class - hide and show the popup */
-.popup .show {
-    visibility: visible;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s;
-}
-
-/* Add animation (fade in the popup) */
-@-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
-    to {opacity: 1;}
-}
-
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
 }
