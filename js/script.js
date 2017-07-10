@@ -1,4 +1,4 @@
-var map, mapOptions, originPlaced, destPlaced, placeRoute;
+var map, mapOptions, originPlaced, destPlaced, placeRoute, vehicleChosen, vehicleChosenCost, vehicleChosenFuelEco, peopleInfo, startInfo, destInfo, routeObject, DaysInt;
 var travelMethod = "DRIVING";
 var peopleChosen = 1;
 var DaysChosen = 1;
@@ -10,22 +10,22 @@ var DaysPattern = /^\d+$/;
 var mixer = mixitup('#vehicles-container');
 var VehicleArray = [
     {
-      vehicleName: "Motorbike",
+      vehicleName: "motorbike",
       CostPerDay: "109",
       FuelEconomy: "3.7"
     },
     {
-      vehicleName: "Small car",
+      vehicleName: "small car",
       CostPerDay: "129",
       FuelEconomy: "8.5"
     },
     {
-      vehicleName: "Large car",
+      vehicleName: "large car",
       CostPerDay: "144",
       FuelEconomy: "9.7"
     },
     {
-      vehicleName: "Motor home",
+      vehicleName: "motorhome",
       CostPerDay: "200",
       FuelEconomy: "17"
     }
@@ -191,7 +191,7 @@ function init(){
 
   map = new google.maps.Map(document.getElementById("map"), mapOptions)
   placeRoute = new AutocompleteDirectionsHandler(map);
-  var destinationSaved;
+
 }
 
 //clear address inputs and hide errors if correct destination is there
@@ -206,6 +206,22 @@ $("#destination-input").focus(function(){
   destPlaced = false;
 });
 
+
+function PopulateInfoBox(response) {
+    $("#start-address-info").text(response.routes[0].legs[0].end_address);
+    $("#end-address-info").text(response.routes[0].legs[0].start_address);
+    $("#total-distance-info").text(response.routes[0].legs[0].distance.text);
+    var DistanceKM = response.routes[0].legs[0].distance.text;
+    var DistanceNum = DistanceKM.match(/(?:\d*\.)?\d+/g);
+    console.log("matched to reg ex = "+ DistanceNum);
+    var DistanceInt = String(DistanceNum).replace(/\,/g,'');
+    var fuelTotal = parseFloat(((vehicleChosenFuelEco / 100) * DistanceInt * 1.859).toFixed(2));
+    var TotalTravelCost = ((vehicleChosenCost * DaysInt) + fuelTotal).toFixed(2);
+    $("#fuel-cost-info").text(vehicleChosenFuelEco + "L/100km = " + "$"+ fuelTotal);
+    $("#vehicle-cost-info").text("$" + vehicleChosenCost+ "/day for " + DaysInt + " day/s = $" + (vehicleChosenCost * DaysInt));
+    $("#full-cost-info").text("$" + TotalTravelCost);
+    $("#your-details-info").html("Trip length (days): " + DaysChosen + " <br> Amount of travellers: " + peopleInfo + " <br> Vehicle: " + vehicleChosen);
+  }
 
 //route plotting
  
@@ -226,7 +242,6 @@ function AutocompleteDirectionsHandler(map) {
   var destinationAutocomplete = new google.maps.places.Autocomplete(
       destinationInput, {placeIdOnly: true, componentRestrictions: {country: "NZ"}
     });
-    destinationSaved = destinationAutocomplete;
 
   this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
   this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
@@ -269,6 +284,8 @@ AutocompleteDirectionsHandler.prototype.route = function() {
   }, function(response, status) {
     if (status === 'OK') {
       me.directionsDisplay.setDirections(response);
+      PopulateInfoBox(response);
+      
     } else {
       window.alert('Directions request failed due to ' + status);
     }
@@ -279,6 +296,21 @@ AutocompleteDirectionsHandler.prototype.route = function() {
 // normal code here
 
 $(document).ready(function() {
+
+
+ var $mainSidebar = $( "#sidebar-main" );
+
+  $mainSidebar.simplerSidebar( {
+    align: "left",
+    attr: "sidebar-main",
+    selectors: {
+      trigger: "#sidebar-main-trigger",
+      quitter: ".quitter"
+    },
+    animation: {
+      easing: "easeOutQuint"
+    }
+  } );
 
 // fade in welcome modal
   setTimeout(function(){
@@ -309,14 +341,23 @@ $(document).ready(function() {
           disableDefaultUI: false, //turn off user interface
           scrollwheel: true,
           draggable: true,
-          draggableCursor: "pointer",
-          draggingCursor: "pointer",
+          draggableCursor: "default",
+          draggingCursor: "default",
           fullscreenControl: false,
           disableDoubleClickZoom: false,
           keyboardShortcuts: true
       };
       map.setOptions(mapOptions);
  };
+
+  if ($('#modal-4-vehicle').is(":visible")) {
+      console.log("modal 4 is active");
+      if ($('#vehicles-container').hasClass( "mixitup-container-failed" ) ) {
+      console.log("NO vehicles shown");
+  }
+};
+
+
 
 // validate amount of days
 
@@ -328,6 +369,7 @@ $(document).ready(function() {
           $('input[name=days-selector]').attr('disabled', true);
           $('#days-form').css('color', 'lightgrey');
           ValidDays = true;
+          DaysInt = $(this).val();
           RadioNumberSelected = false;
         }else if ($(this).val() == ""){
           $('#error-days').text("");
@@ -411,6 +453,7 @@ $(document).ready(function() {
   });
 
     $('#btn-next-people').click(function() {
+    peopleInfo = ($("[name=people-selector]:checked").val());
     peopleChosen = ($("[name=people-selector]:checked").val() + "Ppl");
     $('#modal-2-people').css("display", "none");
     $('#modal-3-days').css("display", "inline-block");
@@ -428,6 +471,7 @@ $(document).ready(function() {
         $('#modal-3-days').css("display", "none");
         DaysWords = (toWords(DaysChosen) + "Day");
       }else if (ValidDays == false && RadioNumberSelected == true){
+        DaysInt = $("[name=days-selector]:checked").val();
         DaysChosen = $("[name=days-selector]:checked").val();
         $('#modal-4-vehicle').css("display", "inline-block");
         $('#modal-3-days').css("display", "none");
@@ -443,11 +487,12 @@ $(document).ready(function() {
 
   $('#btn-next-vehicle').click(function() {
     if ($(".v-selected").is(":visible")) {
-      console.log("selected vehicle: " + $(".v-selected").attr('data-vehicle-type'));
 
       for (var i = 0; i < VehicleArray.length; i++) {
         if ($(".v-selected").attr('data-vehicle-type') == VehicleArray[i].vehicleName) {
-            console.log(VehicleArray[i]);
+            vehicleChosen = VehicleArray[i].vehicleName;
+            vehicleChosenCost = VehicleArray[i].CostPerDay;
+            vehicleChosenFuelEco = VehicleArray[i].FuelEconomy;
           }
         }
 
@@ -464,15 +509,19 @@ $(document).ready(function() {
     });
   $('#btn-next-address').click(function() {
       if (originPlaced && destPlaced == true) {
-      //create route here
-      $('#modal-5-address').addClass('hide');
       $('#modal-5-address').css("opacity", "0");
       $('#modal-5-address').css("transform", "scale(0.75, 0.75)");
+      startInfo = $('origin-input').val();
+      destInfo = $('destination-input').val();
       setTimeout(function(){
         $('#modal-5-address').css("display", "none");
       }, 300);
       unlockMap(); 
       placeRoute.route();
+      setTimeout(function(){
+        $("#sidebar-main-trigger").trigger("click");
+      }, 600);
+      $('.hamburger').css("display", "inline-block");
       }else {
         $("#error-dest").text("\u2757 Both start and end addresses are required.");
       }
@@ -484,6 +533,13 @@ $(document).ready(function() {
   function CreateVehicleMix(){
     var FilterVariable = "." + DaysWords + "." + peopleChosen;
     mixer.filter(FilterVariable);
+    //timeout on mix it up animation to determine if the div is empty
+    // setTimeout(function(){
+    //         if ($('#vehicles-container').hasClass( "mixitup-container-failed" ) ) {
+    //     console.log("NO vehicles shown");
+    //    }; 
+    //   }, 1000);
+
   }
 
 });
