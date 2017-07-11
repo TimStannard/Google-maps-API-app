@@ -208,12 +208,11 @@ $("#destination-input").focus(function(){
 
 
 function PopulateInfoBox(response) {
-    $("#start-address-info").text(response.routes[0].legs[0].end_address);
-    $("#end-address-info").text(response.routes[0].legs[0].start_address);
+    $("#start-address-info").text(response.routes[0].legs[0].start_address);
+    $("#end-address-info").text(response.routes[0].legs[0].end_address);
     $("#total-distance-info").text(response.routes[0].legs[0].distance.text);
     var DistanceKM = response.routes[0].legs[0].distance.text;
     var DistanceNum = DistanceKM.match(/(?:\d*\.)?\d+/g);
-    console.log("matched to reg ex = "+ DistanceNum);
     var DistanceInt = String(DistanceNum).replace(/\,/g,'');
     var fuelTotal = parseFloat(((vehicleChosenFuelEco / 100) * DistanceInt * 1.859).toFixed(2));
     var TotalTravelCost = ((vehicleChosenCost * DaysInt) + fuelTotal).toFixed(2);
@@ -252,6 +251,7 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
   autocomplete.bindTo('bounds', this.map);
   autocomplete.addListener('place_changed', function() {
     var place = autocomplete.getPlace();
+    console.log(place);
     if (!place.place_id) {
       window.alert("Please select an option from the dropdown list.");
       return;
@@ -266,6 +266,11 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
 
     if(originPlaced && destPlaced) $("#error-dest").text("");
 
+    // var ImgPlaces = autocomplete.getPlaces();
+    //       if (!ImgPlace.length) {
+    //         return;
+    //     }
+    //   console.log(ImgPlaces);
 
   });
 
@@ -297,6 +302,16 @@ AutocompleteDirectionsHandler.prototype.route = function() {
 
 $(document).ready(function() {
 
+    var mySwiper = new Swiper ('.swiper-container',{
+      initialSlide: 0,
+      direction: 'horizontal',
+      loop: false,
+      observer: true,
+      observeParents: true,
+      pagination: '.swiper-pagination',
+      paginationClickable: true
+
+});
 
  var $mainSidebar = $( "#sidebar-main" );
 
@@ -349,15 +364,6 @@ $(document).ready(function() {
       };
       map.setOptions(mapOptions);
  };
-
-  if ($('#modal-4-vehicle').is(":visible")) {
-      console.log("modal 4 is active");
-      if ($('#vehicles-container').hasClass( "mixitup-container-failed" ) ) {
-      console.log("NO vehicles shown");
-  }
-};
-
-
 
 // validate amount of days
 
@@ -499,7 +505,7 @@ $(document).ready(function() {
       $('#modal-4-vehicle').css("display", "none"); 
       $('#modal-5-address').css("display", "inline-block"); 
     }else{
-      $("#error-vehicles").text("\u2757 Please choose a vehicle.");
+      $("#error-vehicles").text("\u2757 A vehicle must be chosen.");
       
     }
 
@@ -520,25 +526,43 @@ $(document).ready(function() {
       placeRoute.route();
       setTimeout(function(){
         $("#sidebar-main-trigger").trigger("click");
-      }, 600);
+      }, 800);
       $('.hamburger').css("display", "inline-block");
       }else {
         $("#error-dest").text("\u2757 Both start and end addresses are required.");
       }
+    });   
 
-     });      
-     
-  });
+});
+
+  $('#btn-new-route').click(function() {
+      location.reload();
+});
+
+ $('#close-help').click(function() {   
+    $('#help-box').css("display", "none");
+    $('#modal-1-start').css("display", "inline-block");
+ }); 
+
+ $('.help-bubble').click(function() {   
+    $('#help-box').css("display", "block");
+    $('#modal-1-start').css("display", "none");
+ });
 
   function CreateVehicleMix(){
     var FilterVariable = "." + DaysWords + "." + peopleChosen;
     mixer.filter(FilterVariable);
-    //timeout on mix it up animation to determine if the div is empty
-    // setTimeout(function(){
-    //         if ($('#vehicles-container').hasClass( "mixitup-container-failed" ) ) {
-    //     console.log("NO vehicles shown");
-    //    }; 
-    //   }, 1000);
+    // timeout on mix it up animation to determine if the div is empty
+    if (!$('#vehicles-container').hasClass( "mixitup-container-failed" ) ) {
+     $("#error-vehicles").text("");
+     }
+    setTimeout(function(){
+
+
+            if ($('#vehicles-container').hasClass( "mixitup-container-failed" ) ) {
+        $("#error-vehicles").text("\u2757 Sorry, for your chosen options, no vehicles are currently avaliable.");
+       }; 
+      }, 1100);
 
   }
 
