@@ -142,12 +142,6 @@
 				hideMask = function() {
 					$mask.fadeOut( duration );
 				},
-				PushMapMargin = function() {
-					$('#map').css('margin-left', '370px');
-				};
-				PullMapMargin = function() {
-					$('#map').css('margin-left', '0px');
-				};
 
 				$trigger = $( cfg.selectors.trigger ), 
 				quitter = !cfg.selectors.quitter ? "a" : cfg.selectors.quitter,
@@ -163,13 +157,13 @@
 							open: function() {
 								showMask();
 								changeSidebarStatus( "opened" );
-								PushMapMargin();
+			
 								cfg.events.on.animation.open();
 							},
 							close: function() {
 								hideMask();
 								changeSidebarStatus( "closed" );
-								PullMapMargin();
+								
 								cfg.events.on.animation.close();
 							},
 							both: function() {

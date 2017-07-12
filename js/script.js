@@ -216,7 +216,7 @@ function PopulateInfoBox(response) {
     var DistanceInt = String(DistanceNum).replace(/\,/g,'');
     var fuelTotal = parseFloat(((vehicleChosenFuelEco / 100) * DistanceInt * 1.859).toFixed(2));
     var TotalTravelCost = ((vehicleChosenCost * DaysInt) + fuelTotal).toFixed(2);
-    $("#fuel-cost-info").text(vehicleChosenFuelEco + "L/100km = " + "$"+ fuelTotal);
+    $("#fuel-cost-info").text("Fuel price: $1.859/L, " + "vehicle fuel economy: " + vehicleChosenFuelEco + "L/100km = " + "$"+ fuelTotal);
     $("#vehicle-cost-info").text("$" + vehicleChosenCost+ "/day for " + DaysInt + " day/s = $" + (vehicleChosenCost * DaysInt));
     $("#full-cost-info").text("$" + TotalTravelCost);
     $("#your-details-info").html("Trip length (days): " + DaysChosen + " <br> Amount of travellers: " + peopleInfo + " <br> Vehicle: " + vehicleChosen);
@@ -395,8 +395,12 @@ $(document).ready(function() {
           $('#error-days').text("\u2757 Number must be less than 16.");
           $('#tick-days').css("display", "none");
           ValidDays = false;
+        }else if ($(this).val().match(/\./)) {
+          $('#error-days').text("\u2757 Please enter a whole number.");
+          $('#tick-days').css("display", "none");
+          ValidDays = false;
         }else {
-          $('#error-days').text("\u2757 Please enter a whole number only.");
+          $('#error-days').text("\u2757 Please enter a number.");
           $('#tick-days').css("display", "none");
           $('input[name=days-selector]').attr('disabled', true);
           $('#days-form').css('color', 'lightgrey');

@@ -664,9 +664,16 @@ margin-right: 5px;
 }
 
 #btn-new-route {
-	margin-right: 25px;
+	margin-right: 14px;
 	position: relative;
 	top: -9px;
+}
+
+#full-cost-info {
+	color: green;
+	font-size: 20px;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 0px rgba(150, 150, 150, 0.15);
 }
 
 /*map css*/
